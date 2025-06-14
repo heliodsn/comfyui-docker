@@ -23,7 +23,8 @@ RUN chown 1000:1000 -R /code
 RUN useradd -m --groups users,sudo  -u 1000 user
 USER user
 ENV HOME=/home/user \
-    PATH=/home/user/.local/bin:$PATH
+    PATH=/home/user/.local/bin:$PATH \
+    PORT=7860
 
 # Pyenv
 RUN curl https://pyenv.run | bash
@@ -143,4 +144,4 @@ RUN cd custom_nodes && git clone https://github.com/EllangoK/ComfyUI-post-proces
 
 RUN echo "Done"
 
-CMD ["python", "main.py", "--listen", "0.0.0.0", "--port", "7860", "--output-directory", "${USE_PERSISTENT_DATA:+/data/}"]
+CMD ["python", "main.py", "--listen", "0.0.0.0", "--port", "$PORT", "--output-directory", "${USE_PERSISTENT_DATA:+/data/}"]
